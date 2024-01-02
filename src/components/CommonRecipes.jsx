@@ -1,4 +1,5 @@
 import axios from "axios"
+import apiKey from "../key"
 
 export default function CommonRecipes({setShownRecipes, allIngredients, changeCurrentTab}){
 
@@ -21,7 +22,7 @@ export default function CommonRecipes({setShownRecipes, allIngredients, changeCu
         if(resp){
             setShownRecipes(JSON.parse(resp))
         }else{
-            axios.get(`https://api.spoonacular.com/recipes/${e.currentTarget.dataset.similiarid}/similar?apiKey=44f9733afe504aebb4d7524f3c90bc99&number=50`).then(res=>{
+            axios.get(`https://api.spoonacular.com/recipes/${e.currentTarget.dataset.similiarid}/similar?apiKey=${apiKey}&number=50`).then(res=>{
                 localStorage.setItem(id, JSON.stringify(res.data))
                 setShownRecipes(res.data)
             })

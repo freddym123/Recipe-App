@@ -2,6 +2,7 @@ import CommonRecipes from "./CommonRecipes"
 import Recipes from "./Recipes"
 import { useEffect, useState } from "react"
 import axios from "axios";
+import apiKey from "../key"
 
 
 
@@ -23,7 +24,7 @@ export default function Home({seeRecipe, setShownRecipes, recipes, allIngredient
         }
         const timeout = setTimeout(async ()=>{
 
-            await axios.get(`https://api.spoonacular.com/recipes/autocomplete?apiKey=44f9733afe504aebb4d7524f3c90bc99&number=25&query=${searchVal}`).then(res=>{
+            await axios.get(`https://api.spoonacular.com/recipes/autocomplete?apiKey=${apiKey}&number=25&query=${searchVal}`).then(res=>{
                 setShownRecipes(res.data)
             })
         }, 500)

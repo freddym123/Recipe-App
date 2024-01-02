@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import reactLogo from './assets/react.svg'
+
 import viteLogo from '/vite.svg'
 import './App.css'
 import Title from './components/Title'
@@ -12,6 +12,7 @@ import Login from './components/Login'
 import Profile from './components/Profile'
 import axios from "axios"
 import Instructions from './components/Instructions'
+import apiKey from "./key"
 
 function App() {
   const [loginForm, setLoginForm] = useState(false);
@@ -26,7 +27,7 @@ function App() {
   const [recipeName, setRecipeName] = useState("")
 
   async function getRecipes(){
-    await axios.get("https://api.spoonacular.com/recipes/random?apiKey=44f9733afe504aebb4d7524f3c90bc99&number=50").then(res=>{
+    await axios.get(`https://api.spoonacular.com/recipes/random?apiKey=${apiKey}&number=50`).then(res=>{
       setShownRecipes(res.data.recipes);
       localStorage.setItem("all", JSON.stringify(res.data.recipes));
       console.log(JSON.parse(localStorage.getItem("all")));
@@ -66,7 +67,7 @@ function App() {
   async function seeRecipe(e){
     setRecipeId(e.currentTarget.dataset.recipeid)
     setRecipeName(e.currentTarget.dataset.recipename)
-    e.currentTarget.dataset.recipeid == recipeId ? "" :await axios.get(`https://api.spoonacular.com/recipes/${e.currentTarget.dataset.recipeid}/ingredientWidget.json?apiKey=44f9733afe504aebb4d7524f3c90bc99`).then(res=>{setIngredients(res.data.ingredients)})
+    e.currentTarget.dataset.recipeid == recipeId ? "" :await axios.get(`https://api.spoonacular.com/recipes/${e.currentTarget.dataset.recipeid}/ingredientWidget.json?apiKey=${apiKey}`).then(res=>{setIngredients(res.data.ingredients)})
     
     setLookingAtRecipe(true)
   }
@@ -80,7 +81,7 @@ function App() {
   }
 
   async function seeInstruction(){
-    await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?apiKey=44f9733afe504aebb4d7524f3c90bc99`).then(res=>{
+    await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?apiKey=${apiKey}`).then(res=>{
       setInstructions(res.data)
     })
     setLookingAtInstructions(true)
